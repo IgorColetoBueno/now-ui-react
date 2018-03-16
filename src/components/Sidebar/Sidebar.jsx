@@ -8,8 +8,8 @@ import logo from "logo-white.svg";
 
 var ps;
 
-class Sidebar extends React.Component{
-    constructor(props){
+class Sidebar extends React.Component {
+    constructor(props) {
         super(props);
         this.activeRoute.bind(this);
     }
@@ -17,40 +17,41 @@ class Sidebar extends React.Component{
     activeRoute(routeName) {
         return this.props.location.pathname.indexOf(routeName) > -1 ? 'active' : '';
     }
-    componentDidMount(){
-        if(navigator.platform.indexOf('Win') > -1){
-            ps = new PerfectScrollbar(this.refs.sidebar,{suppressScrollX: true, suppressScrollY: false});
+    componentDidMount() {
+        if (navigator.platform.indexOf('Win') > -1) {
+            ps = new PerfectScrollbar(this.refs.sidebar, { suppressScrollX: true, suppressScrollY: false });
         }
     }
-    componentWillUnmount(){
-        if(navigator.platform.indexOf('Win') > -1){
+    componentWillUnmount() {
+        if (navigator.platform.indexOf('Win') > -1) {
             ps.destroy();
         }
     }
-    render(){
+    render() {
         return (
             <div className="sidebar" data-color="blue">
                 <div className="logo">
-                	<a href="https://www.creative-tim.com" className="simple-text logo-mini">
+                    <a href="https://www.creative-tim.com" className="simple-text logo-mini">
                         <div className="logo-img">
                             <img src={logo} alt="react-logo" />
                         </div>
-                	</a>
-                	<a href="https://www.creative-tim.com" className="simple-text logo-normal">
-                		Creative Tim
+                    </a>
+                    <a href="https://www.creative-tim.com" className="simple-text logo-normal">
+                        Creative Tim
                 	</a>
                 </div>
                 <div className="sidebar-wrapper" ref="sidebar">
                     <Nav>
                         {
-                            this.props.routes.map((prop,key) => {
-                                if(prop.redirect)
+                            this.props.routes.map((prop, key) => {
+                                if (prop.redirect || prop.onSideBar !== true) {
                                     return null;
+                                }
                                 return (
-                                    <li className={this.activeRoute(prop.path) + (prop.pro ? " active active-pro":"")} key={key}>
+                                    <li className={this.activeRoute(prop.path) + (prop.pro ? " active active-pro" : "")} key={key}>
                                         <NavLink to={prop.path} className="nav-link" activeClassName="active">
-                                            <i className={"now-ui-icons "+prop.icon}></i>
-                                            <p>{prop.name}</p>
+                                            <i className={"now-ui-icons " + prop.icon}></i>
+                                            <p><b>{prop.name}</b></p>
                                         </NavLink>
                                     </li>
                                 );
